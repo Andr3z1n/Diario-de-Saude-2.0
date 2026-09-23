@@ -1,0 +1,19 @@
+{
+  "name": "diario-de-saude-poo",
+  "version": "1.0.0",
+  "description": "Um diário de saúde e alimentação estruturado com Programação Orientada a Objetos em JavaScript.",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": [
+    "saude",
+    "alimentacao",
+    "poo",
+    "javascript"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {}
+}
