@@ -3,15 +3,16 @@
 const prompt = require("prompt-sync")()
 
 // Classe principal do registro alimentar
-class RegistroAlimentar {
+class RegistroAlimentar { 
 
     // Conta os registros criados
-    static total = 0
+    static total = 0 // static: faz com que a variável pertença à classe
+                    //  RegistroAlimentar, e não a cada objeto criado.
 
     // Atributos privados
     #calorias
     #agua
-
+    
     // Recebe os dados do registro
     constructor(cafe, almoco, jantar, lanches, calorias, agua) {
 
@@ -29,43 +30,45 @@ class RegistroAlimentar {
         this.agua = agua
 
         // Aumenta o total de registros
-        RegistroAlimentar.total++
+        RegistroAlimentar.total++ //Toda vez que um novo registro alimentar é criado,
+                                  //essa linha aumenta o contador em uma unidade.
     }
 
     // Getter das calorias
     get calorias() {
-        return this.#calorias
+        return this.#calorias // # um encapsulamento isso é um atributo privado.
     }
 
     // Setter das calorias
-    set calorias(valor) {
-        this.#calorias = valor
+    set calorias(valor) {       // o setter permite alterar o valor das calorias,
+        this.#calorias = valor  //  mantendo o encapsulamento do atributo privado.
     }
 
     // Getter da água
-    get agua() {
-        return this.#agua
+    get agua() {            // permite consultar a quantidade de água armazenada
+        return this.#agua   //  no atributo privado, mantendo o encapsulamento.
     }
 
     // Setter da água
-    set agua(valor) {
-        this.#agua = valor
+    set agua(valor) {        // permite alterar a quantidade de água consumida, mantendo o encapsulamento do atributo privado.
+        this.#agua = valor   //consumida, mantendo o encapsulamento do atributo privado.
     }
 
     // Método que será utilizado pela classe filha
-    gerarResumo() {
-        return ""
+    gerarResumo() {     // gerar um resumo do registro alimentar.
+        return ""      // o "" não retorna nada no momento
     }
 
     // Retorna o total de registros
-    static mostrarTotal() {
-        return RegistroAlimentar.total
-    }
+    static mostrarTotal() { // static: faz com que o método pertença à classe, e não ao objeto.
+        return RegistroAlimentar.total  // acessa o contador que guarda
+    }                                   //  a quantidade de registros alimentares criados.
 }
 
 // Herança: classe filha do registro alimentar
 class RegistroCompleto extends RegistroAlimentar {
-
+// extends: indica que uma classe está herdando características de outra classe.
+    
     // Gera o resumo do registro
     gerarResumo() {
         return `
@@ -87,10 +90,10 @@ class RegistroFactory {
 
     // Método que cria um novo registro
     static criar(cafe, almoco, jantar, lanches, calorias, agua) {
-
+            // o criar: é o nome do método responsável por criar um novo registro alimentar.
         // Retorna um objeto da classe RegistroCompleto
-        return new RegistroCompleto(
-            cafe,
+        return new RegistroCompleto(  // cria um novo objeto RegistroCompleto com os dados das
+            cafe,                     //  refeições, calorias e água e retorna esse objeto para o programa.
             almoco,
             jantar,
             lanches,
@@ -104,32 +107,33 @@ class RegistroFactory {
 class DiarioAlimentar {
 
     // Cria o histórico vazio
-    constructor() {
-        this.historico = []
+    constructor() {   // prepara o objeto quando ele é criado.
+           // cria o histórico do diário e começa com uma
+        this.historico = []   //  lista vazia para guardar os registros alimentares.
     }
 
     // Adiciona um registro
     adicionarDia(registro) {
-        this.historico.push(registro)
-        console.log("Registro adicionado!")
+        this.historico.push(registro)  // coloca o registro dentro da lista historico.
+        console.log("Registro adicionado!")  //
     }
 
     // Exibe o histórico e o resumo geral
     exibirHistorico() {
 
         // Verifica se o histórico está vazio
-        if (this.historico.length === 0) {
-            console.log("O diário está vazio!")
+        if (this.historico.length === 0) {     // conta quantos registros existem.
+            console.log("O diário está vazio!") //=== 0 → verifica se a quantidade é exatamente 0.
             return
         }
 
         // Soma as calorias de todos os registros
-        const totalCalorias = this.historico.reduce(
-            (total, registro) => total + registro.calorias, 0
+        const totalCalorias = this.historico.reduce( // o reduce() soma as calorias de todos os registros do histórico.
+            (total, registro) => total + registro.calorias, 0 // pega as calorias de cada registro e vai somando até chegar ao total.
         )
 
         // Soma toda a água consumida
-        const totalAgua = this.historico.reduce(
+        const totalAgua = this.historico.reduce( // // o reduce() soma as calorias de todos os registros do histórico.
             (total, registro) => total + registro.agua, 0
         )
 
@@ -140,9 +144,11 @@ class DiarioAlimentar {
 
         // Exibe o resumo geral
         console.log("\n===== RESUMO GERAL =====") // esse \n é um comando para pular uma linha dentro de um texto.
-        console.log("Total de registros: " + this.historico.length)
-        console.log("Calorias estimadas: " + totalCalorias + " kcal")
-        console.log("Água consumida: " + totalAgua + " ml")
+
+        // Mostra a quantidade total de registros cadastrados no histórico
+        console.log("Total de registros: " + this.historico.length)  // O length conta quantos registros alimentares existem dentro da lista historico.
+        console.log("Calorias estimadas: " + totalCalorias + " kcal") // a soma das calorias estimadas de todos os registros alimentares.
+        console.log("Água consumida: " + totalAgua + " ml") // quantidade total de água consumida em todos os registros alimentares.
     }
 }
 
@@ -159,6 +165,7 @@ class Menu {
     executar() {
 
         // Mantém o menu aberto até escolher sair
+                        // !== => “é diferente de 3”.
         while (this.opcao !== "3") {  // while é um comando usado para repetir um código enquanto uma condição for verdadeira.
             //⬆ Enquanto a opção não for 3, continue repetindo.
 
@@ -175,22 +182,26 @@ class Menu {
             if (this.opcao === "1") { // === significa "é exatamente igual a".
 
                 // Recebe as refeições
-                const cafe = prompt("Café da manhã: ")
-                const caloriasCafe = Number(prompt("Calorias do café: "))
+                const cafe = prompt("Café da manhã: ")  // Pede para o usuário informar o que comeu no café da manhã
+                const caloriasCafe = Number(prompt("Calorias do café: ")) // Converte para número as calorias informadas no café da manhã
 
-                const almoco = prompt("Almoço: ")
-                const caloriasAlmoco = Number(prompt("Calorias do almoço: "))
+                const almoco = prompt("Almoço: ") // Pede para o usuário informar o que comeu no almoço
+                const caloriasAlmoco = Number(prompt("Calorias do almoço: ")) // // Converte para número as calorias informadas no almoço
 
-                const jantar = prompt("Jantar: ")
+                const jantar = prompt("Jantar: ") // Pede para o usuário informar o que comeu no jantar
+                // Converte para número as calorias informadas no jantar
                 const caloriasJantar = Number(prompt("Calorias do jantar: "))
 
+                // Pede para o usuário informar o que comeu nos lanches
                 const lanches = prompt("Lanches: ")
+
+                // Converte para número as calorias informadas nos lanches
                 const caloriasLanches = Number(prompt("Calorias dos lanches: "))
 
-                // Soma as calorias das refeições
+                // Soma as calorias do café, almoço, jantar e lanches
                 const calorias = caloriasCafe + caloriasAlmoco + caloriasJantar + caloriasLanches
 
-                // Recebe a quantidade de água
+                // Pede a quantidade de água consumida e converte o valor para número
                 const agua = Number(prompt("Água consumida em ml: "))
 
                 // Mostra as calorias estimadas
@@ -202,7 +213,7 @@ class Menu {
                 console.log("Total estimado: " + calorias + " kcal")
 
                 // Cria o registro usando a Factory
-                const registro = RegistroFactory.criar(    // o programa está criando um novo registro do Diário Alimentar usando o Factory.
+                const registro = RegistroFactory.criar( // o programa está criando um novo registro do Diário Alimentar usando o Factory.
                     cafe,
                     almoco,
                     jantar,
